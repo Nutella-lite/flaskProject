@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+Clicker
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron text-center">
+        {% if current_user.is_authenticated %}
+            <h1 class="display-4">Добро пожаловать, {{ current_user.username }}!</h1>
+            <p class="lead">Это магический кликер. <br>От каждого Вашего клика - количество добра в мире увеличивается на один чей-то хороший поступок.</p>
+        {% else %}
+            <h1 class="display-4">Добро пожаловать!</h1>
+            <p class="lead">Пожалуйста, <a href="{{ url_for('login') }}" class="text-info">войдите</a> или <a href="{{ url_for('register') }}" class="text-info">зарегистрируйтесь</a>.</p>
+        {% endif %}
+        <hr class="my-4">
+        <p>Ваше количество кликов - {{ current_user.clicks }}</p>
+        <a href="{{ url_for("click") }}" class="btn btn-outline-info btn-lg" role="button">Причинить добро!</a>
+    </div>
+{% endblock %}
