@@ -17,4 +17,15 @@ Clicker
         <p>Ваше количество кликов - {{ current_user.clicks }}</p>
         <a href="{{ url_for("click") }}" class="btn btn-outline-info btn-lg" role="button">Причинить добро!</a>
     </div>
+    <div id="quote">
+        {% if quote %}
+            <div class="card border-info mb-3">
+                <div class="card-body">
+                    <h4 class="card-title" >{{ quote['content'] }}</h4>
+                    <p class="card-text">Автор:  {{ quote['author'] }}</p>
+                    <p class="card-text">Теги:  {{ quote['tags'] }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

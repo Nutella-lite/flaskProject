@@ -3,12 +3,30 @@ from flask_login import login_user, logout_user, current_user, login_required
 from app import app, db, bcrypt
 from app.models import User
 from app.forms import RegistrationForm, LoginForm, UpdateAccountForm
-
+import requests
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Clicker')
+    quote = None
+    if request.method == 'POST':
+        quote = get_quote()
+    return render_template('index.html', title='Clicker', quote=quote)
+
+def get_quote():
+    url = 'https://api.quotable.io/random'
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as errh:
+        print(errh)
+    except requests.exceptions.ConnectionError as errc:
+        print(errc)
+    except requests.exceptions.Timeout as errt:
+        print(errt)
+    except requests.exceptions.RequestException as err:
+        print(err)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
